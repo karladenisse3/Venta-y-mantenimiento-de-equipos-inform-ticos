@@ -75,6 +75,7 @@ insert into CLIENTES values (1719230342, 'Carlos Paul','Peñafiel Palma','Porven
 /*INGRESO TIPO_EMPLEADO*/
 insert into TIPO_EMPLEADO values (1, 'VENDEDOR');
 insert into TIPO_EMPLEADO values (2, 'TECNICO');
+insert into TIPO_EMPLEADO values (3, 'TECNICO PARTICULAR')
 
 /*INGRESO EMPLEADOS*/
 insert into EMPLEADOS values (1, 1, 1647815664, 'Eliana Cristina', 'Valle Ramirez', 'Femenino', 'Calle 15 av. 25', 0999543034, '05/10/1997');
