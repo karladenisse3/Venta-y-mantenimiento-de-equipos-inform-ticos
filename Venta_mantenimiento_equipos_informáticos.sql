@@ -1,24 +1,24 @@
 /*==============================================================*/
-/* Table: ARTICULOS                                             */
+/* Table: ARTICULO                                             */
 /*==============================================================*/
-create table ARTICULOS (
-   COD_ARTICULOS        INT4                 not null,
+create table ARTICULO (
+   COD_ARTICULO        INT4                 not null,
    ARTICULOS_NOMBRE     VARCHAR(100)         not null,
    ARTICULOS_CANTIDAD   INT4                 not null,
    ARTICULOS_PRECIO     NUMERIC              not null,
-   constraint PK_ARTICULOS primary key (COD_ARTICULOS)
+   constraint PK_ARTICULO primary key (COD_ARTICULO)
 );
 
 /*==============================================================*/
-/* Table: CLIENTES                                              */
+/* Table: CLIENTE                                              */
 /*==============================================================*/
-create table CLIENTES (
+create table CLIENTE (
    CLIENTE_CEDULA       INT4                 not null,
    CLIENTE_NOMBRES      VARCHAR(30)          not null,
    CLIENTES_APELLIDOS   VARCHAR(30)          not null,
    CLIENTE_DIRECCION    VARCHAR(100)         not null,
    CLIENTE_TELEFONO     INT4                 not null,
-   constraint PK_CLIENTES primary key (CLIENTE_CEDULA)
+   constraint PK_CLIENTE primary key (CLIENTE_CEDULA)
 );
 
 /*==============================================================*/
@@ -27,7 +27,7 @@ create table CLIENTES (
 create table DETALLE_LOTE (
    COD_DETALLE_LOTE     INT4                 not null,
    COD_LOTE             INT4                 not null,
-   COD_ARTICULOS        INT4                 not null,
+   COD_ARTICULO        INT4                 not null,
    constraint PK_DETALLE_LOTE primary key (COD_DETALLE_LOTE)
 );
 
@@ -36,7 +36,7 @@ create table DETALLE_LOTE (
 /*==============================================================*/
 create table DETALLE_MANTENIMIENTO (
    COD_DETALLE_MANTENIMIENTO INT4                 not null,
-   COD_ARTICULOS        INT4                 not null,
+   COD_ARTICULO        INT4                 not null,
    COD_MANTENIMIENTO    INT4                 not null,
    constraint PK_DETALLE_MANTENIMIENTO primary key (COD_DETALLE_MANTENIMIENTO)
 );
@@ -46,16 +46,16 @@ create table DETALLE_MANTENIMIENTO (
 /*==============================================================*/
 create table DETALLE_VENTA (
    COD_DETALLE_VENTA    INT4                 not null,
-   COD_ARTICULOS        INT4                 not null,
+   COD_ARTICULO        INT4                 not null,
    COD_CANTIDAD 		INT4				 not null,
-   COD_VENTAS           INT4                 not null,
+   COD_VENTA           INT4                 not null,
    constraint PK_DETALLE_VENTA primary key (COD_DETALLE_VENTA)
 );
 
 /*==============================================================*/
-/* Table: EMPLEADOS                                             */
+/* Table: EMPLEADO                                             */
 /*==============================================================*/
-create table EMPLEADOS (
+create table EMPLEADO (
    COD_EMPLEADO         INT4                 not null,
    COD_TIPO             INT4                 null,
    EMPLEADO_CEDULA      INT4                 not null,
@@ -65,7 +65,8 @@ create table EMPLEADOS (
    EMPLEADO_DIRECCION   VARCHAR(100)         not null,
    EMPLEADO_TELEFONO    INT4                 not null,
    EMPLEADO_FECHA_NACIMIENTO DATE                 not null,
-   constraint PK_EMPLEADOS primary key (COD_EMPLEADO)
+   EMPLEADO_NACIONALIDAD VARCHAR(30)          not null,
+   constraint PK_EMPLEADO primary key (COD_EMPLEADO)
 );
 
 /*==============================================================*/
@@ -73,7 +74,7 @@ create table EMPLEADOS (
 /*==============================================================*/
 create table LOTE (
    COD_LOTE             INT4                 not null,
-   COD_PROVEEDORES      INT4                 null,
+   COD_PROVEEDOR      INT4                 null,
    LOTE_FECHA_INGRESO   DATE                 not null,
    LOTE_COSTO           NUMERIC              not null,
    constraint PK_LOTE primary key (COD_LOTE)
@@ -96,17 +97,17 @@ create table MANTENIMIENTO (
 );
 
 /*==============================================================*/
-/* Table: PROVEEDORES                                           */
+/* Table: PROVEEDOR                                           */
 /*==============================================================*/
-create table PROVEEDORES (
-   COD_PROVEEDORES      INT4                 not null,
+create table PROVEEDOR (
+   COD_PROVEEDOR      INT4                 not null,
    PROVEEDORES_NOMBRE   VARCHAR(50)          not null,
    PROVEEDORES_PAIS     VARCHAR(30)          not null,
    PROVEEDORES_CIUDAD   VARCHAR(30)          not null,
    PROVEEDORES_DIRECCION VARCHAR(100)         not null,
    PROVEEDORES_TELEFONO INT4                 not null,
    PROVEEDORES_CORREO   VARCHAR(50)          not null,
-   constraint PK_PROVEEDORES primary key (COD_PROVEEDORES)
+   constraint PK_PROVEEDOR primary key (COD_PROVEEDOR)
 );
 
 /*==============================================================*/
@@ -119,14 +120,14 @@ create table TIPO_EMPLEADO (
 );
 
 /*==============================================================*/
-/* Table: VENTAS                                                */
+/* Table: VENTA                                                */
 /*==============================================================*/
-create table VENTAS (
-   COD_VENTAS           INT4                 not null,
+create table VENTA (
+   COD_VENTA           INT4                 not null,
    CLIENTE_CEDULA       INT4                 null,
    COD_EMPLEADO         INT4                 null,
    VENTAS_TOTAL         NUMERIC              not null,
-   constraint PK_VENTAS primary key (COD_VENTAS)
+   constraint PK_VENTA primary key (COD_VENTA)
 );
 
 alter table DETALLE_LOTE
@@ -135,13 +136,13 @@ alter table DETALLE_LOTE
       on delete restrict on update restrict;
 
 alter table DETALLE_LOTE
-   add constraint FK_DETALLE__DETALLE_L_ARTICULO foreign key (COD_ARTICULOS)
-      references ARTICULOS (COD_ARTICULOS)
+   add constraint FK_DETALLE__DETALLE_L_ARTICULO foreign key (COD_ARTICULO)
+      references ARTICULO (COD_ARTICULO)
       on delete restrict on update restrict;
 
 alter table DETALLE_MANTENIMIENTO
-   add constraint FK_DETALLE__DETALLE_M_ARTICULO foreign key (COD_ARTICULOS)
-      references ARTICULOS (COD_ARTICULOS)
+   add constraint FK_DETALLE__DETALLE_M_ARTICULO foreign key (COD_ARTICULO)
+      references ARTICULO (COD_ARTICULO)
       on delete restrict on update restrict;
 
 alter table DETALLE_MANTENIMIENTO
@@ -150,42 +151,42 @@ alter table DETALLE_MANTENIMIENTO
       on delete restrict on update restrict;
 
 alter table DETALLE_VENTA
-   add constraint FK_DETALLE__DETALLE_V_ARTICULO foreign key (COD_ARTICULOS)
-      references ARTICULOS (COD_ARTICULOS)
+   add constraint FK_DETALLE__DETALLE_V_ARTICULO foreign key (COD_ARTICULO)
+      references ARTICULO (COD_ARTICULO)
       on delete restrict on update restrict;
 
 alter table DETALLE_VENTA
-   add constraint FK_DETALLE__DETALLE_V_VENTAS foreign key (COD_VENTAS)
-      references VENTAS (COD_VENTAS)
+   add constraint FK_DETALLE__DETALLE_V_VENTA foreign key (COD_VENTA)
+      references VENTA (COD_VENTA)
       on delete restrict on update restrict;
 
-alter table EMPLEADOS
+alter table EMPLEADO
    add constraint FK_EMPLEADO_RELATIONS_TIPO_EMP foreign key (COD_TIPO)
       references TIPO_EMPLEADO (COD_TIPO)
       on delete restrict on update restrict;
 
 alter table LOTE
-   add constraint FK_LOTE_RELATIONS_PROVEEDO foreign key (COD_PROVEEDORES)
-      references PROVEEDORES (COD_PROVEEDORES)
+   add constraint FK_LOTE_RELATIONS_PROVEEDO foreign key (COD_PROVEEDOR)
+      references PROVEEDOR (COD_PROVEEDOR)
       on delete restrict on update restrict;
 
 alter table MANTENIMIENTO
    add constraint FK_MANTENIM_RELATIONS_EMPLEADO foreign key (COD_EMPLEADO)
-      references EMPLEADOS (COD_EMPLEADO)
+      references EMPLEADO (COD_EMPLEADO)
       on delete restrict on update restrict;
 
 alter table MANTENIMIENTO
-   add constraint FK_MANTENIM_RELATIONS_CLIENTES foreign key (CLIENTE_CEDULA)
-      references CLIENTES (CLIENTE_CEDULA)
+   add constraint FK_MANTENIM_RELATIONS_CLIENTE foreign key (CLIENTE_CEDULA)
+      references CLIENTE (CLIENTE_CEDULA)
       on delete restrict on update restrict;
 
-alter table VENTAS
-   add constraint FK_VENTAS_RELATIONS_CLIENTES foreign key (CLIENTE_CEDULA)
-      references CLIENTES (CLIENTE_CEDULA)
+alter table VENTA
+   add constraint FK_VENTA_RELATIONS_CLIENTE foreign key (CLIENTE_CEDULA)
+      references CLIENTE (CLIENTE_CEDULA)
       on delete restrict on update restrict;
 
-alter table VENTAS
-   add constraint FK_VENTAS_RELATIONS_EMPLEADO foreign key (COD_EMPLEADO)
-      references EMPLEADOS (COD_EMPLEADO)
+alter table VENTA
+   add constraint FK_VENTA_RELATIONS_EMPLEADO foreign key (COD_EMPLEADO)
+      references EMPLEADO (COD_EMPLEADO)
       on delete restrict on update restrict;
 
